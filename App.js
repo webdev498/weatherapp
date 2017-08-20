@@ -1,91 +1,89 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import ChartView from 'react-native-highcharts';
+import React, {Component} from 'react';
+import { StyleSheet, Text, View, Button, ScrollView, StatusBar, Navigator } from 'react-native';
+import { SideMenu, SitesMenu } from './config/router';
+import Header from './shared/header';
+import { NavigationActions } from 'react-navigation';
+import {Font} from 'expo';
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Weather></Weather>
-        <WaterConsumption></WaterConsumption>
-      </View>
-    );
-  }
-}
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingBottom: 60
   },
+  body: {
+    flex: 1
+  },
+  header: {
+    height: 60,
+    borderStyle: 'solid',
+    borderBottomColor: '#ccc', 
+    borderBottomWidth: 1,
+  },
+  contentContainer: {
+    paddingVertical: 60
+  }
 });
 
-class Weather extends React.Component {
+export default class App extends Component {
+
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      navOpen: false,
+      fontLoaded: false
+    };
   }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'source-sans-regular': require('./public/assets/fonts/SourceSansPro-Regular.ttf'),
+      'source-sans-bold': require('./public/assets/fonts/SourceSansPro-Bold.ttf'),
+      'source-sans-black': require('./public/assets/fonts/SourceSansPro-Black.ttf')
+    });
+
+    this.setState({fontLoaded: true});
+  }
+
+  openNav = () => {
+    const {navOpen} = this.state;
+    let currentState = navOpen ? 'DrawerClose' : 'DrawerOpen';
+    this.navigator._navigation.navigate(currentState);
+  }
+
+  // gets the current screen from navigation state
+  getCurrentRouteName = (navigationState) => {
+    if (!navigationState) {
+      return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+    // dive into nested navigators
+    if (route.routes) {
+      return this.getCurrentRouteName(route);
+    }
+    return route.routeName;
+  }
+
 
   render() {
+    const {fontLoaded} = this.state;
     return (
-      <View>
-        <Text>81°</Text>
-        <Text>Controller Location</Text>
-        <Text>City, State</Text>
-      </View>
-    );
-  }
-}
+        <View style={styles.body}>
+          {fontLoaded ? (
+            <Header openNav={this.openNav} />
+            ) : null
+          }
+          {fontLoaded ? (
+            <SideMenu ref={nav => { this.navigator = nav; }} onNavigationStateChange={(prevState, currentState) => {
+              const currentScreen = this.getCurrentRouteName(currentState);
+              const prevScreen = this.getCurrentRouteName(prevState);
 
-class WaterConsumption extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  chartOptions = {
-    exporting: {
-      enabled: false
-    },
-    title: {
-      text: ''
-    },
-    legend: {
-      enabled: false
-    },
-    xAxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-      labels: {
-        style: {"fontSize":"35px"}
-      }
-    },
-    yAxis: {
-      visible: false,
-      tickAmount: 2
-    },
-    plotOptions: {
-        series: {
-            marker: {
-                enabled: true,
-                symbol: 'circle',
-                radius: 15
-            }
-        }
-    },
-    series: [{
-      data: [29.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6]
-    }]
-  };
-
-  render() {
-    return (
-      <View>
-        <Text>How much water you have saved this year</Text>
-        <ChartView style={{height:100}} config={this.chartOptions}></ChartView>
-        <Text>City, State</Text>
-      </View>
+              if(prevScreen !== currentScreen) {
+                this.setState({navOpen: currentScreen === 'DrawerOpen'})
+              }
+            }} />
+            ) : null
+          }
+        </View>
     );
   }
 }
