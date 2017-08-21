@@ -1,20 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "17.0.0",
-    "ios": {
-      "bundleIdentifier": "com.weathermatic.concept"
-    },
-    "android": {
-      "package": "com.weathermatic.concept"
-    },
-    "name": "Concept",
-    "slug": "concept",
-    "version": "0.1.0",
-    "isDetached": true,
-    "detach": {
-      "scheme": "expc712871687c64489aab2c9c465f2b4c9",
-      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v1.16.2-sdk17.0.0-b5bce87c-1a42-4b6d-888f-877f855c9680.tar.gz",
-      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v1.16.1-sdk17.0.0-87570a36-13ff-4017-9b89-6c9930b78572.tar.gz"
-    }
+    "sdkVersion": "17.0.0"
   }
 }
