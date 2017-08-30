@@ -4,7 +4,7 @@ import { SideMenu, SitesMenu } from './config/router';
 import Header from './shared/header';
 import { NavigationActions } from 'react-navigation';
 import {Font} from 'expo';
-
+import I18n from './common/localization';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,6 +32,11 @@ export default class App extends Component {
       navOpen: false,
       fontLoaded: false
     };
+  }
+
+  async componentWillMount() {
+    await I18n.initAsync();
+    this.forceUpdate();
   }
 
   async componentDidMount() {
