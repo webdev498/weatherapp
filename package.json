@@ -19,7 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo": "^17.0.0",
+    "expo": "^20.0.0",
     "react": "16.0.0-alpha.6",
     "react-native": "^0.44.0",
     "react-native-haptic": "^1.0.5",
