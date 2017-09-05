@@ -6,6 +6,10 @@ import { NavigationActions } from 'react-navigation';
 import I18n from './common/localization';
 import { Constants, Location, Permissions, Font } from 'expo';
 
+import { Provider, connect } from 'react-redux'
+import store from './store/store.js'
+import { locationFetched } from './reducers/locations'
+
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 60
@@ -68,8 +72,10 @@ export default class App extends Component {
       'latitude': location.coords.latitude, 
       'longitude' : location.coords.longitude
     })
-    console.log('ADDRESS -----------------', address);
-   
+
+    if (address.length > 0) {
+      store.dispatch(locationFetched(address[0]));
+    }
   }
 
   openNav = () => {
@@ -95,6 +101,7 @@ export default class App extends Component {
   render() {
     const {fontLoaded} = this.state;
     return (
+      <Provider store={store}>
         <View style={styles.body}>
           {fontLoaded ? (
             <Header openNav={this.openNav} />
@@ -112,6 +119,7 @@ export default class App extends Component {
             ) : null
           }
         </View>
+      </Provider>
     );
   }
 }
