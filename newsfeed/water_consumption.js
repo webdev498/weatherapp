@@ -54,11 +54,12 @@ export default class WaterConsumption extends React.Component {
   };
 
   render() {
+    console.log('===render state', this.props);
     return (
       <View style={[styles.section,styles.water_consumption]}>
         <Text style={styles.text}>How much water you have saved this year</Text>
         <ChartView style={styles.chart} config={this.chartOptions}></ChartView>
-        <Text style={styles.text}>City, State</Text>
+        <Text style={styles.text}>{this.props.location.city + ', ' + this.props.location.region }</Text>
       </View>
     );
   }
