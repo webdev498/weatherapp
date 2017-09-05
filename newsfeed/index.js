@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, ScrollView, StatusBar, Navigator } from 'react-native';
 import Weather from './weather';
-import WaterConsumption from './water_consumption';
 import ControllerStatus from './controller_status';
 import InspectionStatus from './inspection_status';
 import ControllerFaults from './controller_faults';
 import ControllerDelays from './controller_delays';
+import WaterConsumptionContainer from '../containers/LocationContainer'
 
 
 const styles = StyleSheet.create({
@@ -33,7 +33,7 @@ export default class NewsFeed extends React.Component {
         <View style={styles.container}>
           <ScrollView>
             <Weather/>
-            <WaterConsumption/>
+            <WaterConsumptionContainer/>
             <ControllerStatus/>
             <InspectionStatus/>
             <ControllerFaults/>
