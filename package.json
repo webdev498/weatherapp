@@ -19,9 +19,9 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo": "^20.0.0",
-    "react": "16.0.0-alpha.6",
-    "react-native": "^0.44.0",
+    "expo": "^19.0.0",
+    "react": "16.0.0-alpha.12",
+    "react-native": "^0.46.4",
     "react-native-haptic": "^1.0.5",
     "react-native-highcharts": "^1.0.1",
     "react-native-i18n": "github:xcarpentier/react-native-i18n",
