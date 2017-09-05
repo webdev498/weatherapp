@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, Button, ScrollView, StatusBar, Navigator } from
 import { SideMenu, SitesMenu } from './config/router';
 import Header from './shared/header';
 import { NavigationActions } from 'react-navigation';
-import {Font} from 'expo';
 import I18n from './common/localization';
+import { Constants, Location, Permissions, Font } from 'expo';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,8 +35,12 @@ export default class App extends Component {
   }
 
   async componentWillMount() {
+    //Localization
     await I18n.initAsync();
     this.forceUpdate();
+
+    //Geolocation
+    this.getLocationAsync();
   }
 
   async componentDidMount() {
@@ -47,6 +51,25 @@ export default class App extends Component {
     });
 
     this.setState({fontLoaded: true});
+  }
+
+  getLocationAsync = async() => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({ location });
+
+    let address = await Location.reverseGeocodeAsync({ 
+      'latitude': location.coords.latitude, 
+      'longitude' : location.coords.longitude
+    })
+    console.log('ADDRESS -----------------', address);
+   
   }
 
   openNav = () => {
