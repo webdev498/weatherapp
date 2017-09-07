@@ -10,6 +10,8 @@ import { Provider, connect } from 'react-redux'
 import store from './store/store.js'
 import { locationFetched } from './reducers/locations'
 
+import LoginScreen from './screens/login/login'
+
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 60
@@ -97,9 +99,9 @@ export default class App extends Component {
     return route.routeName;
   }
 
-
-  render() {
+  getHomeView() {
     const {fontLoaded} = this.state;
+    
     return (
       <Provider store={store}>
         <View style={styles.body}>
@@ -121,5 +123,16 @@ export default class App extends Component {
         </View>
       </Provider>
     );
+
+  }
+
+
+  render() {
+    return (
+      <View style={styles.body}>
+        <LoginScreen homeView={this.getHomeView}/>
+      </View>
+    );
+    
   }
 }
