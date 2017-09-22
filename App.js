@@ -99,7 +99,7 @@ export default class App extends Component {
     return route.routeName;
   }
 
-  getHomeView() {
+  getHomeView(props) {
     const {fontLoaded} = this.state;
     
     return (
@@ -128,9 +128,14 @@ export default class App extends Component {
 
 
   render() {
+    const isLoggedIn = true;
     return (
       <View style={styles.body}>
-        <LoginScreen homeView={this.getHomeView}/>
+
+        { isLoggedIn ? 
+          (this.getHomeView())
+          : ( <LoginScreen homeView={this}/> )
+        }
       </View>
     );
     

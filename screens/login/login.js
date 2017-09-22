@@ -22,6 +22,7 @@ class Home extends Component {
   render() {
 
     console.log("Home props : ", this.props);
+
     return (
       <View style={styles.container}>
         <Text>
@@ -34,20 +35,18 @@ class Home extends Component {
 
 export default class LoginScreen extends Component {
 
-   render() {
+  componentDidMount() {
+    
+    let loginBtn = this.refs.fakeLoginBtn;
+  }
+
+  render() {
     const promise = () => new Promise((resolve, reject) => setTimeout (() => resolve(), 2000));
 
-    /*
-    <Login.Button
-              onPress={promise}
-              style={styles.button} />
-
-    */
-
     return (
-      <View style={styles.container}>
-
-        <Image source={background} style={styles.background} resizeMode="cover">
+      <Login.View style={styles.container} homeScreen={this._reactInternalInstance._currentElement._owner._instance}>
+        <Image source={background} style={styles.background} resizeMode="cover"/>
+        <View style={styles.subcontainer}>
           <View style={styles.markWrap}>
             <Image source={mark} style={styles.mark} resizeMode="contain" />
             <View style={styles.welcomeWrap}>
@@ -82,13 +81,17 @@ export default class LoginScreen extends Component {
                 <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
               </View>
             </TouchableOpacity>
-
+{/*
             <TouchableOpacity activeOpacity={.5}>
               <View style={styles.button}>
                 <Text style={styles.buttonText}>Log In</Text>
               </View>
             </TouchableOpacity>
-            
+*/}            
+            <Login.Button
+              ref="fakeLoginBtn"
+              onPress={promise}
+              style={styles.button}/>
           </View>
           <View style={styles.container}>
             <View style={styles.signupWrap}>
@@ -100,18 +103,24 @@ export default class LoginScreen extends Component {
               </TouchableOpacity>
             </View>
           </View>
-        </Image>
-      </View>
+        </View>
+      </Login.View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
+  },
+  subcontainer: {
+    position: 'absolute',
+    top: 0,
+    width,
+    height,
   },
   markWrap: {
-    flex: 1,
+    // flex: 1,
     paddingVertical: 50,
     paddingLeft : 30,
     width: '70%',
@@ -126,6 +135,7 @@ const styles = StyleSheet.create({
   background: {
     width,
     height,
+    // display: 'block',
   },
   wrapper: {
     paddingVertical: 30,
@@ -140,11 +150,10 @@ const styles = StyleSheet.create({
     borderBottomColor: "#CCC",
   },
   welcomeWrap: {
-    position: 'absolute',
     bottom: 0,
     width : '100%',
     height : 90,
-    paddingLeft: 30,
+    paddingTop: 50,
   },
   welcomeText: {
     color: "#D8D8D8",
@@ -168,6 +177,14 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     paddingHorizontal: 10,
+  },
+  buttonLogin: {
+    backgroundColor: "#FF3366",
+    position: 'absolute',
+    marginLeft: 30,
+    marginRight: 30,
+    height : 100,
+
   },
   button: {
     backgroundColor: "#FF3366",
